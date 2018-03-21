@@ -1,4 +1,6 @@
 module HealthMonitor
+  class IntentionalException < StandardError; end
+
   class HealthController < ActionController::Base
     protect_from_forgery with: :exception
 
@@ -20,6 +22,10 @@ module HealthMonitor
           render xml: statuses.to_xml
         end
       end
+    end
+
+    def fail
+      raise IntentionalException.new("This route always fails to enable testing 500 pages and exception tracking") 
     end
 
     private
