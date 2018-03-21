@@ -240,6 +240,9 @@ HealthMonitor.configure do |config|
 end
 ```
 
+### Fail Route
+In order to allow for testing of 500 pages and exception tracking / logging, you can also hit the /fail route which will raise an instance of the IntentionalException.
+
 ### Monitoring Script
 
 A Nagios/Shinken/Icinga/Icinga2 plugin is available in `extra` directory.
