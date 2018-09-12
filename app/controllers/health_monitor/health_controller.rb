@@ -16,10 +16,10 @@ module HealthMonitor
       respond_to do |format|
         format.html
         format.json do
-          render json: statuses.to_json
+          render json: statuses.to_json, status: statuses[:status]
         end
         format.xml do
-          render xml: statuses.to_xml
+          render xml: statuses.to_xml, status: statuses[:status]
         end
       end
     end
@@ -31,7 +31,7 @@ module HealthMonitor
     private
 
     def statuses
-      res = HealthMonitor.check(request: request)
+      res = HealthMonitor.check(request: request, params: providers_params)
       res.merge(env_vars)
     end
 
@@ -47,6 +47,10 @@ module HealthMonitor
       authenticate_or_request_with_http_basic do |name, password|
         name == credentials[:username] && password == credentials[:password]
       end
+    end
+
+    def providers_params
+      params.permit(providers: [])
     end
   end
 end
