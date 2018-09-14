@@ -174,6 +174,8 @@ The following services are currently supported:
 * Sidekiq
 * Resque
 * Delayed Job
+* ElasticSearch
+* Solr
 
 ## Configuration
 
@@ -186,6 +188,8 @@ HealthMonitor.configure do |config|
   config.redis
   config.sidekiq
   config.delayed_job
+  config.elastic_search
+  config.solr
 end
 ```
 
@@ -247,6 +251,16 @@ The currently supported settings are:
 #### Delayed Job
 
 * `queue_size`: the size (maximim) of a queue which is considered unhealthy (the default is 100).
+
+#### ElasticSearch
+
+* `elastic_search_url`: the url used to connect to your ElasticSearch instance - note, this is an optional configuration and will use the default connection if not specified
+* `ping_url`: the url used to ping and receive a response from ElasticSearch
+
+#### Solr
+
+* `solr_url`: the url used to connect to your Solr instance - note, this is an optional configuration and will use the default connection if not specified
+* `ping_url`: the url used to ping and receive a response from Solr
 
 ### Adding a Custom Provider
 It's also possible to add custom health check providers suited for your needs (of course, it's highly appreciated and encouraged if you'd contribute useful providers to the project).
@@ -338,6 +352,8 @@ Database : OK
 Cache : OK
 Redis : OK
 Sidekiq : OK
+ElasticSearch : OK
+Solr : OK
 
 nicolas@desktop:$ echo $?
 0
@@ -351,6 +367,8 @@ Database : OK
 Cache : OK
 Redis : ERROR (Error connecting to Redis on 127.0.0.1:6379 (Errno::ECONNREFUSED))
 Sidekiq : ERROR (Error connecting to Redis on 127.0.0.1:6379 (Errno::ECONNREFUSED))
+ElasticSearch : OK
+Solr : OK
 
 nicolas@desktop:$ echo $?
 2
