@@ -254,13 +254,13 @@ The currently supported settings are:
 
 #### ElasticSearch
 
-* `elastic_search_url`: the url used to connect to your ElasticSearch instance - note, this is an optional configuration and will use the default connection if not specified
-* `ping_url`: the url used to ping and receive a response from ElasticSearch
+* `elastic_search_url`: the url part that is the location of the server. http://localhost:9200 is the default.
+* `ping_url`: the full url for health status. The default is the elastic_search_url + `/_cluster/health`.
 
 #### Solr
 
-* `solr_url`: the url used to connect to your Solr instance - note, this is an optional configuration and will use the default connection if not specified
-* `ping_url`: the url used to ping and receive a response from Solr
+* `solr_url`: the url part that is the location of the server. http://localhost:8983/solr/collection1 is the default.
+* `ping_url`: the full url for health status. The default is the solr_url + `/admin/ping?wt=json`.
 
 ### Adding a Custom Provider
 It's also possible to add custom health check providers suited for your needs (of course, it's highly appreciated and encouraged if you'd contribute useful providers to the project).
