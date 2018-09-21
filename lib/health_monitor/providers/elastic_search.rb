@@ -6,7 +6,7 @@ module HealthMonitor
 
     class ElasticSearch < Base
       class Configuration
-        DEFAULT_ELASTIC_SEARCH_URL = "http://localhost:9200"
+        DEFAULT_ELASTIC_SEARCH_URL = 'http://localhost:9200'.freeze
 
         attr_accessor :elastic_search_url, :ping_url
 
@@ -15,17 +15,17 @@ module HealthMonitor
           @ping_url = nil
         end
 
-        def ping_url
-          @ping_url ||= self.elastic_search_url + '/_cluster/health'
+        def elastic_ping_url
+          @ping_url ||= @elastic_search_url + '/_cluster/health'
         end
       end
 
       def check!
         # Check connection to the DB:
-        response = open(configuration.ping_url)
-        if response.try(:status).try(:first) == "200"
+        response = open(configuration.elastic_ping_url)
+        if response.try(:status).try(:first) == '200'
           json = JSON.parse(response.read)
-          if json["status"] == "green"
+          if json['status'] == 'green'
             json
           else
             raise ElasticSearchException.new("ElasticSearch Ping Failed #{configuration.ping_url} response was #{json}")
@@ -37,7 +37,6 @@ module HealthMonitor
         raise ElasticSearchException.new(e.message)
       end
 
-      private
       class << self
         private
 
@@ -45,7 +44,6 @@ module HealthMonitor
           ::HealthMonitor::Providers::ElasticSearch::Configuration
         end
       end
-
     end
   end
 end
