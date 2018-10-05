@@ -4,7 +4,7 @@ describe HealthMonitor::Providers::ElasticSearch do
   describe HealthMonitor::Providers::ElasticSearch::Configuration do
     describe 'defaults' do
       it { expect(described_class.new.elastic_search_url).to eq(HealthMonitor::Providers::ElasticSearch::Configuration::DEFAULT_ELASTIC_SEARCH_URL) }
-      it { expect(described_class.new.ping_url).to eq(HealthMonitor::Providers::ElasticSearch::Configuration::DEFAULT_ELASTIC_SEARCH_URL + '/_cluster/health') }
+      it { expect(described_class.new.elastic_ping_url).to eq(HealthMonitor::Providers::ElasticSearch::Configuration::DEFAULT_ELASTIC_SEARCH_URL + '/_cluster/health') }
     end
   end
 
@@ -47,7 +47,7 @@ describe HealthMonitor::Providers::ElasticSearch do
     described_class.configure
   end
 
-  let(:elastic_search_url) { "http://localhost:9100" }
+  let(:elastic_search_url) { 'http://localhost:9100' }
 
   it 'elastic_search_url can be configured' do
     expect {

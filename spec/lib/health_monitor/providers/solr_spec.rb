@@ -4,7 +4,7 @@ describe HealthMonitor::Providers::Solr do
   describe HealthMonitor::Providers::Solr::Configuration do
     describe 'defaults' do
       it { expect(described_class.new.solr_url).to eq(HealthMonitor::Providers::Solr::Configuration::DEFAULT_SOLR_URL) }
-      it { expect(described_class.new.ping_url).to eq(HealthMonitor::Providers::Solr::Configuration::DEFAULT_SOLR_URL + '/admin/ping?wt=json') }
+      it { expect(described_class.new.solr_ping_url).to eq(HealthMonitor::Providers::Solr::Configuration::DEFAULT_SOLR_URL + '/admin/ping?wt=json') }
     end
   end
 
@@ -40,14 +40,14 @@ describe HealthMonitor::Providers::Solr do
   end
 
   describe '#configurable?' do
-    it { expect(described_class).to be_configurable}
+    it { expect(described_class).to be_configurable }
   end
 
   describe '#configure' do
     described_class.configure
   end
 
-  let(:solr_url) { "http://localhost:8984" }
+  let(:solr_url) { 'http://localhost:8984' }
 
   it 'solr_url can be configured' do
     expect {
