@@ -7,16 +7,17 @@ module HealthMonitor
     class ElasticSearch < Base
       class Configuration
         DEFAULT_ELASTIC_SEARCH_URL = 'http://localhost:9200'.freeze
+        DEFAULT_PING_URL = '/_cluster/health'.freeze
 
-        attr_accessor :elastic_search_url, :ping_url
+        attr_accessor :elastic_search_url, :elastic_ping_url
 
         def initialize
           @elastic_search_url = DEFAULT_ELASTIC_SEARCH_URL
-          @ping_url = nil
+          @elastic_ping_url = nil
         end
 
         def elastic_ping_url
-          @ping_url ||= @elastic_search_url + '/_cluster/health'
+          @elastic_ping_url ||= elastic_search_url + DEFAULT_PING_URL
         end
       end
 

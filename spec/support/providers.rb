@@ -22,22 +22,22 @@ module Providers
   end
 
   def stub_elastic_search
-    response = double(read: '{"status":"green"}', status: %w(200 OK))
+    response = double(read: '{"status":"green"}', status: %w[200 OK])
     allow(OpenURI).to receive(:open_uri).and_return(response)
   end
 
   def stub_elastic_search_failure
-    response = double(read: '{"status":"red"}', status: %w(500 Error))
+    response = double(read: '{"status":"red"}', status: %w[500 Error])
     allow(OpenURI).to receive(:open_uri).and_return(response)
   end
 
   def stub_solr
-    response = double(read: '{"status":"OK"}', status: %w(200 OK))
+    response = double(read: '{"status":"OK"}', status: %w[200 OK])
     allow(OpenURI).to receive(:open_uri).and_return(response)
   end
 
   def stub_solr_failure
-    response = double(read: '{"status":"red"}', status: %w(500 Error))
+    response = double(read: '{"status":"red"}', status: %w[500 Error])
     allow(OpenURI).to receive(:open_uri).and_return(response)
   end
 

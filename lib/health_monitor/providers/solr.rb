@@ -7,16 +7,17 @@ module HealthMonitor
     class Solr < Base
       class Configuration
         DEFAULT_SOLR_URL = 'http://localhost:8983/solr/collection1'.freeze
+        DEFAULT_PING_URL = '/admin/ping?wt=json'.freeze
 
-        attr_accessor :solr_url, :ping_url
+        attr_accessor :solr_url, :solr_ping_url
 
         def initialize
           @solr_url = DEFAULT_SOLR_URL
-          @ping_url = nil
+          @solr_ping_url = nil
         end
 
         def solr_ping_url
-          @ping_url ||= @solr_url + '/admin/ping?wt=json'
+          @solr_ping_url ||= solr_url + DEFAULT_PING_URL
         end
       end
 
