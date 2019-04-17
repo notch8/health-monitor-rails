@@ -11,6 +11,7 @@ module HealthMonitor
     end
 
     def check
+      expires_now
       @statuses = statuses
 
       respond_to do |format|
@@ -25,6 +26,7 @@ module HealthMonitor
     end
 
     def fail
+      expires_now
       raise IntentionalException.new("This route always fails to enable testing 500 pages and exception tracking") 
     end
 
