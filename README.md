@@ -251,6 +251,7 @@ The currently supported settings are:
 #### Delayed Job
 
 * `queue_size`: the size (maximim) of a queue which is considered unhealthy (the default is 100).
+* `latency`: the latency (in seconds) of a queue (now - when the oldest job was enqueued) which is considered unhealthy (the default is 1 hour, but larger processing queue should have a larger latency value).
 
 #### ElasticSearch
 
