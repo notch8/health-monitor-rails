@@ -13,7 +13,7 @@ module HealthMonitor
 
         attr_accessor :queue_size
         attr_accessor :latency
-        attr-accessor :failures
+        attr_accessor :failures
 
         def initialize
           @queue_size = DEFAULT_QUEUES_SIZE
