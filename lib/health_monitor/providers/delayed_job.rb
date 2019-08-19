@@ -51,9 +51,9 @@ module HealthMonitor
       def check_latency!
         # we dont want failed but want both locked and queued
         oldest = job_class.order(:created_at).where(last_error: nil).first
-        age = Time.now - oldest.created_at
+        age = Time.now - oldest.run_at
         return unless age < configuration.latency
-        raise "latency for #{oldest.id} of #{ActiveSupport::Duration.build(age)} is greater than #{configuration.latency}"
+        raise "latency for #{oldest.id} of #{age} is greater than #{configuration.latency}"
       end
       
       def check_failures!
