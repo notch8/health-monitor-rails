@@ -50,7 +50,7 @@ module HealthMonitor
       
       def check_latency!
         # we dont want failed but want both locked and queued
-        oldest = job_class.order(:created_at).where(last_error: nil).first
+        oldest = job_class.order(:run_at).where(last_error: nil).first
         return unless oldest.present?
         age = Time.now - oldest.run_at
         return unless age > configuration.latency
