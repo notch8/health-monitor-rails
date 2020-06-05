@@ -59,4 +59,18 @@ describe HealthMonitor::Providers::DelayedJob do
       }.to change { described_class.new.configuration.queue_size }.to(queue_size)
     end
   end
+
+  describe '.check_failed_latency' do
+    context 'the oldest failure is greater than the failed latency option' do
+      it 'raises an error with the default failed latency' do
+      end
+    end
+
+    context 'the oldest failure is less than the failed latency option' do
+      it 'does not raise an error with the default failed latency' do
+      end
+    end
+
+  end
+
 end
