@@ -17,6 +17,8 @@ describe HealthMonitor::Providers::DelayedJob do
     before do
       described_class.configure
       Providers.stub_delayed_job
+      Providers.stub_delayed_job_where
+      Providers.stub_delayed_job_order
     end
 
     it 'succesfully checks' do
