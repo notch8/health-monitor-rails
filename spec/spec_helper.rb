@@ -11,6 +11,7 @@ Spork.prefork do
   require File.expand_path('dummy/config/environment.rb', __dir__)
 
   require 'rspec/rails'
+  require 'rspec/mocks'
   require 'database_cleaner'
   require 'pry'
   require 'rediska'
