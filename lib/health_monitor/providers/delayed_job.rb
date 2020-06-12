@@ -51,22 +51,24 @@ module HealthMonitor
 
         raise "queue size #{size} is greater than #{configuration.queue_size}"
       end
-      
+
       def check_latency!
         # we dont want failed but want both locked and queued
+        binding.pry
         oldest = job_class.order(:run_at).where(last_error: nil).first
+        # NoMethodError: undefined method `order' for Delayed::Job:Class
         return unless oldest.present?
         age = Time.now - oldest.run_at
         return unless age > configuration.latency
         raise "latency for #{oldest.id} of #{age} is greater than #{configuration.latency}"
       end
-      
+
       def check_failures!
         failures = job_class.where('last_error IS NOT NULL').count
         return unless failures > configuration.failures
         raise "there are #{failures} failed jobs, which is higher than the allowed #{configuration.failures} failures"
       end
-      
+
       def check_failed_latency!
         oldest = job_class.order(:run_at).where('last_error is not null').first
         return unless oldest.present?
