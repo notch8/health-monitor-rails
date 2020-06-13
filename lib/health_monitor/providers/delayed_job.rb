@@ -54,9 +54,7 @@ module HealthMonitor
 
       def check_latency!
         # we dont want failed but want both locked and queued
-        binding.pry
-        oldest = job_class.order(:run_at).where(last_error: nil).first
-        # NoMethodError: undefined method `order' for Delayed::Job:Class
+        oldest = job_class.where(last_error: nil).order(:run_at).first
         return unless oldest.present?
         age = Time.now - oldest.run_at
         return unless age > configuration.latency
