@@ -10,7 +10,7 @@ module HealthMonitor
         DEFAULT_QUEUES_SIZE = 100
         DEFAULT_LATENCY = 1.hour
         DEFAULT_FAILURES = 0
-        DEFAULT_FAILED_LATENCY = 2.hours
+        DEFAULT_FAILED_LATENCY = 30.minutes
 
         attr_accessor :queue_size
         attr_accessor :latency
@@ -68,7 +68,7 @@ module HealthMonitor
       end
 
       def check_failed_latency!
-        oldest = job_class.order(:run_at).where('last_error is not null').first
+        oldest = job_class.where('last_error is not null').order(:run_at).first
         return unless oldest.present?
         age = Time.now - oldest.run_at
         return unless age > configuration.failed_latency
