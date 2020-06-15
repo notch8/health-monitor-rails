@@ -27,6 +27,30 @@ describe HealthMonitor::Providers::DelayedJob do
       }.not_to raise_error
     end
 
+    context 'almost failing' do
+      context 'the oldest failure is less than the failed latency option' do
+        let(:job) { OpenStruct.new(id: 1, run_at: (Time.now - 29.minutes), last_error: 'error') }
+        before do
+          described_class.configure do |config|
+            config.latency = 5.hours
+            config.failures = 50
+            config.failed_latency = 30.minutes
+          end
+
+          job_list = [job]
+          allow(job_list).to receive(:order).and_return(job_list)
+          allow(Delayed::Job).to receive(:where).and_return(job_list)
+        end
+
+        it 'successfully checks' do
+          expect {
+            subject.check!
+          }.not_to raise_error
+        end
+      end
+    end
+
+
     context 'failing' do
       context 'queue_size' do
         before do
@@ -37,6 +61,27 @@ describe HealthMonitor::Providers::DelayedJob do
           expect {
             subject.check!
           }.to raise_error(HealthMonitor::Providers::DelayedJobException)
+        end
+      end
+
+      context 'the oldest failure is greater than the failed latency option' do
+        let(:job) { OpenStruct.new(id: 2, run_at: (Time.now - 30.minutes), last_error: 'error') }
+        before do
+          described_class.configure do |config|
+            config.latency = 5.hours
+            config.failures = 50
+            config.failed_latency = 30.minutes
+          end
+
+          job_list = [job]
+          allow(job_list).to receive(:order).and_return(job_list)
+          allow(Delayed::Job).to receive(:where).and_return(job_list)
+        end
+
+        it 'fails check!' do
+          expect {
+            subject.check!
+          }.to raise_error(HealthMonitor::Providers::DelayedJobException, /one or more jobs has been failed for [\d\.]+ which is greater than 1800/)
         end
       end
     end
