@@ -253,7 +253,7 @@ The currently supported settings are:
 * `queue_size`: the size (maximim) of a queue which is considered unhealthy (the default is 100).
 * `latency`: the latency (in seconds) of a queue (now - when the oldest job was enqueued) which is considered unhealthy (the default is 1 hour, but larger processing queue should have a larger latency value).
 * `failures`: the maximum number of failures that are allowed in the queue at any time. This is based on last_error at, so it includes jobs that would still be retried. Defaults to 0 which would mean no failures are allowed.
-* `failed_latency`: the amount of time to wait before considering failed jobs unhealthy. Defaults to 2 hours.
+* `failed_latency`: the amount of time to wait before considering failed jobs unhealthy. Defaults to 30 minutes.
 
 #### ElasticSearch
 

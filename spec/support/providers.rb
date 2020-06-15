@@ -17,6 +17,14 @@ module Providers
     allow(Delayed::Job).to receive(:count).and_return(1)
   end
 
+  def stub_delayed_job_where
+    allow(Delayed::Job).to receive(:where).and_return([])
+  end
+
+  def stub_delayed_job_order
+    allow_any_instance_of(Array).to receive(:order).and_return([])
+  end
+
   def stub_delayed_job_queue_size_failure
     allow(Delayed::Job).to receive(:count).and_return(1000)
   end
