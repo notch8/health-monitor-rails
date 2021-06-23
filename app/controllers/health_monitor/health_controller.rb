@@ -3,6 +3,7 @@ module HealthMonitor
 
   class HealthController < ActionController::Base
     protect_from_forgery with: :exception
+    before_action :set_cache_control_headers
 
     if Rails.version.starts_with? '3'
       before_filter :authenticate_with_basic_auth
@@ -11,7 +12,6 @@ module HealthMonitor
     end
 
     def check
-      expires_now
       @statuses = statuses
 
       respond_to do |format|
@@ -26,11 +26,13 @@ module HealthMonitor
     end
 
     def fail
-      expires_now
-      raise IntentionalException.new("This route always fails to enable testing 500 pages and exception tracking") 
+      raise IntentionalException.new("This route always fails to enable testing 500 pages and exception tracking")
     end
 
     private
+    def set_cache_control_headers
+      response.headers["Cache-Control"] = "public, no-cache"
+    end
 
     def statuses
       res = HealthMonitor.check(request: request, params: providers_params)
